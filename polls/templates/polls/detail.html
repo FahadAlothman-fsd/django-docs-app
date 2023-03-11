@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  </head>
+  <body>
+    <div class="p-12">
+      <ul
+        role="list"
+        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        <li
+          class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
+        >
+          <div
+            class="flex flex-col w-full items-center justify-between space-y-6 p-6"
+          >
+            <div class="flex-1 truncate">
+              <div class="flex items-center space-x-3">
+                <a href="polls/{{ question.id}}">
+                  <h3 class="truncate text-sm font-medium text-gray-900">
+                    {{ question.question_text }}
+                  </h3>
+                  <span
+                    class="inline-block flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800"
+                    >{{question.pub_date}}</span
+                  >
+                </a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <fieldset class="mt-4">
+                <legend class="sr-only">Choices</legend>
+                <div class="space-y-5">
+                  {% for choice in question.choice_set.all %}
+                  <div class="relative flex items-start">
+                    <div class="flex h-6 items-center">
+                      <input
+                        id="comments"
+                        aria-describedby="comments-description"
+                        name="comments"
+                        type="radio"
+                        class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      />
+                    </div>
+                    <div class="ml-3 text-sm leading-6">
+                      <label for="comments" class="font-medium text-gray-900"
+                        >{{choice.choice_text}}</label
+                      >
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </li>
+        <!-- More people... -->
+      </ul>
+    </div>
+  </body>
+</html>
