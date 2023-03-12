@@ -30,7 +30,17 @@
                 </a>
               </div>
             </div>
-            <div class="flex-1">
+            {%if error_message %}
+            <p class="truncate text-sm font-bold text-red">
+              {{error_message }}
+            </p>
+            {%endif%}
+            <form
+              action="{% url 'polls:vote' question.id %}"
+              method="post"
+              class="flex-1 space-y-4"
+            >
+              {% csrf_token %}
               <fieldset class="mt-4">
                 <legend class="sr-only">Choices</legend>
                 <div class="space-y-5">
@@ -38,15 +48,18 @@
                   <div class="relative flex items-start">
                     <div class="flex h-6 items-center">
                       <input
-                        id="comments"
+                        id="choice {{forloop.counter}}"
                         aria-describedby="comments-description"
-                        name="comments"
+                        name="choice"
                         type="radio"
+                        value="{{ choice.id }}"
                         class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       />
                     </div>
                     <div class="ml-3 text-sm leading-6">
-                      <label for="comments" class="font-medium text-gray-900"
+                      <label
+                        for="choice {{forloop.counter}}"
+                        class="font-medium text-gray-900"
                         >{{choice.choice_text}}</label
                       >
                     </div>
@@ -54,7 +67,38 @@
                   {% endfor %}
                 </div>
               </fieldset>
-            </div>
+              <button
+                type="submit"
+                value="Vote"
+                class="rounded-full bg-indigo-600 p-1 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                <svg
+                  fill="#ffff"
+                  height="25px"
+                  width="25px"
+                  version="1.1"
+                  id="Capa_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 196.338 196.338"
+                  xml:space="preserve"
+                >
+                  <g>
+                    <path
+                      d="M195.767,66.465c-0.761-1.838-2.221-3.298-4.059-4.059L63.483,9.295c-3.824-1.583-8.214,0.232-9.799,4.059L0.571,141.58
+                   c-0.762,1.838-0.762,3.902,0,5.74c0.761,1.838,2.221,3.298,4.059,4.059l86.104,35.665c0.919,0.38,1.895,0.571,2.87,0.571
+                   c0.976,0,1.951-0.19,2.87-0.571l59.566-24.676c1.838-0.761,3.298-2.221,4.059-4.059l35.667-86.105
+                   C196.528,70.368,196.528,68.303,195.767,66.465z M107.464,166.256l7.647-18.463l18.462,7.647L107.464,166.256z M149.112,145.639
+                   l-35.19-14.575c-3.823-1.583-8.214,0.232-9.799,4.059l-14.577,35.193l-72.248-29.925L64.672,26.023l114.367,47.371L149.112,145.639
+                   z"
+                    />
+                    <polygon
+                      points="133.374,98.043 127.632,84.186 89.229,100.098 82.708,84.358 68.851,90.098 81.111,119.697 	"
+                    />
+                  </g>
+                </svg>
+              </button>
+            </form>
           </div>
         </li>
         <!-- More people... -->
