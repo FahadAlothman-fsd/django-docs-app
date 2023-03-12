@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
   </head>
   <body>
@@ -19,7 +21,7 @@
           >
             <div class="flex-1 truncate">
               <div class="flex items-center space-x-3">
-                <a href="polls/{{ question.id}}">
+                <a href="{% url 'polls:detail' question.id %}">
                   <h3 class="truncate text-sm font-medium text-gray-900">
                     {{ question.question_text }}
                   </h3>
@@ -30,7 +32,7 @@
                 </a>
               </div>
             </div>
-            {%if error_message %}
+            {% if error_message %}
             <p class="truncate text-sm font-bold text-red">
               {{error_message }}
             </p>
